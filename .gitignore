@@ -1,0 +1,11 @@
+.env
+**/.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+/deploy/*/model/
+/deploy/*/sessions/
+/deploy/*/data/
+/deploy/*/out/
+/orchestrator/app/data/

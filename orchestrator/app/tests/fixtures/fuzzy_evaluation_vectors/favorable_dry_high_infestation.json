@@ -1,0 +1,1031 @@
+{
+  "name": "favorable_dry_high_infestation",
+  "description": "Same weather window as favorable_dry_low_infestation.json (byte-identical ws_response), high infestation_score. Raw environmental pressure MUST match the low-infestation sibling exactly (the raw engine stage never sees the score); the fused verdicts differ.",
+  "ws_response": {
+    "source": "openmeteo",
+    "location": {
+      "lat": 45.0,
+      "lon": 10.0
+    },
+    "data": [
+      {
+        "timestamp": "2026-06-01T00:00",
+        "values": {
+          "temperature_2m": 20.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T01:00",
+        "values": {
+          "temperature_2m": 20.5681,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T02:00",
+        "values": {
+          "temperature_2m": 20.7679,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T03:00",
+        "values": {
+          "temperature_2m": 21.0858,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T04:00",
+        "values": {
+          "temperature_2m": 21.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T05:00",
+        "values": {
+          "temperature_2m": 21.9824,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T06:00",
+        "values": {
+          "temperature_2m": 22.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T07:00",
+        "values": {
+          "temperature_2m": 23.0176,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T08:00",
+        "values": {
+          "temperature_2m": 23.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T09:00",
+        "values": {
+          "temperature_2m": 23.9142,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T10:00",
+        "values": {
+          "temperature_2m": 24.2321,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T11:00",
+        "values": {
+          "temperature_2m": 24.4319,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T12:00",
+        "values": {
+          "temperature_2m": 24.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T13:00",
+        "values": {
+          "temperature_2m": 24.4319,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T14:00",
+        "values": {
+          "temperature_2m": 24.2321,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T15:00",
+        "values": {
+          "temperature_2m": 23.9142,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T16:00",
+        "values": {
+          "temperature_2m": 23.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T17:00",
+        "values": {
+          "temperature_2m": 23.0176,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T18:00",
+        "values": {
+          "temperature_2m": 22.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T19:00",
+        "values": {
+          "temperature_2m": 21.9824,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T20:00",
+        "values": {
+          "temperature_2m": 21.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T21:00",
+        "values": {
+          "temperature_2m": 21.0858,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T22:00",
+        "values": {
+          "temperature_2m": 20.7679,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-01T23:00",
+        "values": {
+          "temperature_2m": 20.5681,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T00:00",
+        "values": {
+          "temperature_2m": 20.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T01:00",
+        "values": {
+          "temperature_2m": 20.5681,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T02:00",
+        "values": {
+          "temperature_2m": 20.7679,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T03:00",
+        "values": {
+          "temperature_2m": 21.0858,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T04:00",
+        "values": {
+          "temperature_2m": 21.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T05:00",
+        "values": {
+          "temperature_2m": 21.9824,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T06:00",
+        "values": {
+          "temperature_2m": 22.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T07:00",
+        "values": {
+          "temperature_2m": 23.0176,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T08:00",
+        "values": {
+          "temperature_2m": 23.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T09:00",
+        "values": {
+          "temperature_2m": 23.9142,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T10:00",
+        "values": {
+          "temperature_2m": 24.2321,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T11:00",
+        "values": {
+          "temperature_2m": 24.4319,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T12:00",
+        "values": {
+          "temperature_2m": 24.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T13:00",
+        "values": {
+          "temperature_2m": 24.4319,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T14:00",
+        "values": {
+          "temperature_2m": 24.2321,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T15:00",
+        "values": {
+          "temperature_2m": 23.9142,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T16:00",
+        "values": {
+          "temperature_2m": 23.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T17:00",
+        "values": {
+          "temperature_2m": 23.0176,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T18:00",
+        "values": {
+          "temperature_2m": 22.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T19:00",
+        "values": {
+          "temperature_2m": 21.9824,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T20:00",
+        "values": {
+          "temperature_2m": 21.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T21:00",
+        "values": {
+          "temperature_2m": 21.0858,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T22:00",
+        "values": {
+          "temperature_2m": 20.7679,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-02T23:00",
+        "values": {
+          "temperature_2m": 20.5681,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T00:00",
+        "values": {
+          "temperature_2m": 20.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T01:00",
+        "values": {
+          "temperature_2m": 20.5681,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T02:00",
+        "values": {
+          "temperature_2m": 20.7679,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T03:00",
+        "values": {
+          "temperature_2m": 21.0858,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T04:00",
+        "values": {
+          "temperature_2m": 21.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T05:00",
+        "values": {
+          "temperature_2m": 21.9824,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T06:00",
+        "values": {
+          "temperature_2m": 22.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T07:00",
+        "values": {
+          "temperature_2m": 23.0176,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T08:00",
+        "values": {
+          "temperature_2m": 23.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T09:00",
+        "values": {
+          "temperature_2m": 23.9142,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T10:00",
+        "values": {
+          "temperature_2m": 24.2321,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T11:00",
+        "values": {
+          "temperature_2m": 24.4319,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T12:00",
+        "values": {
+          "temperature_2m": 24.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T13:00",
+        "values": {
+          "temperature_2m": 24.4319,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T14:00",
+        "values": {
+          "temperature_2m": 24.2321,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T15:00",
+        "values": {
+          "temperature_2m": 23.9142,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T16:00",
+        "values": {
+          "temperature_2m": 23.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T17:00",
+        "values": {
+          "temperature_2m": 23.0176,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T18:00",
+        "values": {
+          "temperature_2m": 22.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T19:00",
+        "values": {
+          "temperature_2m": 21.9824,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T20:00",
+        "values": {
+          "temperature_2m": 21.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T21:00",
+        "values": {
+          "temperature_2m": 21.0858,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T22:00",
+        "values": {
+          "temperature_2m": 20.7679,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-03T23:00",
+        "values": {
+          "temperature_2m": 20.5681,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T00:00",
+        "values": {
+          "temperature_2m": 20.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T01:00",
+        "values": {
+          "temperature_2m": 20.5681,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T02:00",
+        "values": {
+          "temperature_2m": 20.7679,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T03:00",
+        "values": {
+          "temperature_2m": 21.0858,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T04:00",
+        "values": {
+          "temperature_2m": 21.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T05:00",
+        "values": {
+          "temperature_2m": 21.9824,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T06:00",
+        "values": {
+          "temperature_2m": 22.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T07:00",
+        "values": {
+          "temperature_2m": 23.0176,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T08:00",
+        "values": {
+          "temperature_2m": 23.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T09:00",
+        "values": {
+          "temperature_2m": 23.9142,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T10:00",
+        "values": {
+          "temperature_2m": 24.2321,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T11:00",
+        "values": {
+          "temperature_2m": 24.4319,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T12:00",
+        "values": {
+          "temperature_2m": 24.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T13:00",
+        "values": {
+          "temperature_2m": 24.4319,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T14:00",
+        "values": {
+          "temperature_2m": 24.2321,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T15:00",
+        "values": {
+          "temperature_2m": 23.9142,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T16:00",
+        "values": {
+          "temperature_2m": 23.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T17:00",
+        "values": {
+          "temperature_2m": 23.0176,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T18:00",
+        "values": {
+          "temperature_2m": 22.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T19:00",
+        "values": {
+          "temperature_2m": 21.9824,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T20:00",
+        "values": {
+          "temperature_2m": 21.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T21:00",
+        "values": {
+          "temperature_2m": 21.0858,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T22:00",
+        "values": {
+          "temperature_2m": 20.7679,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-04T23:00",
+        "values": {
+          "temperature_2m": 20.5681,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T00:00",
+        "values": {
+          "temperature_2m": 20.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T01:00",
+        "values": {
+          "temperature_2m": 20.5681,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T02:00",
+        "values": {
+          "temperature_2m": 20.7679,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T03:00",
+        "values": {
+          "temperature_2m": 21.0858,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T04:00",
+        "values": {
+          "temperature_2m": 21.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T05:00",
+        "values": {
+          "temperature_2m": 21.9824,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T06:00",
+        "values": {
+          "temperature_2m": 22.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T07:00",
+        "values": {
+          "temperature_2m": 23.0176,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T08:00",
+        "values": {
+          "temperature_2m": 23.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T09:00",
+        "values": {
+          "temperature_2m": 23.9142,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T10:00",
+        "values": {
+          "temperature_2m": 24.2321,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T11:00",
+        "values": {
+          "temperature_2m": 24.4319,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T12:00",
+        "values": {
+          "temperature_2m": 24.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T13:00",
+        "values": {
+          "temperature_2m": 24.4319,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T14:00",
+        "values": {
+          "temperature_2m": 24.2321,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T15:00",
+        "values": {
+          "temperature_2m": 23.9142,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T16:00",
+        "values": {
+          "temperature_2m": 23.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T17:00",
+        "values": {
+          "temperature_2m": 23.0176,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T18:00",
+        "values": {
+          "temperature_2m": 22.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T19:00",
+        "values": {
+          "temperature_2m": 21.9824,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T20:00",
+        "values": {
+          "temperature_2m": 21.5,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T21:00",
+        "values": {
+          "temperature_2m": 21.0858,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T22:00",
+        "values": {
+          "temperature_2m": 20.7679,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      },
+      {
+        "timestamp": "2026-06-05T23:00",
+        "values": {
+          "temperature_2m": 20.5681,
+          "relative_humidity_2m": 88.0,
+          "precipitation": 0.0
+        }
+      }
+    ]
+  },
+  "engine_version": "2.0.0",
+  "threat_definition_version": "1.0.0",
+  "threat_scientific_name": "Brevicoryne brassicae",
+  "threat_crop": "brassica-oleracea",
+  "expected_environmental_pressure": {
+    "daily_scores": [
+      {
+        "date": "2026-06-01",
+        "value": 13.92,
+        "risk_level": "low"
+      },
+      {
+        "date": "2026-06-02",
+        "value": 31.36,
+        "risk_level": "moderate"
+      },
+      {
+        "date": "2026-06-03",
+        "value": 34.87,
+        "risk_level": "moderate"
+      },
+      {
+        "date": "2026-06-04",
+        "value": 38.39,
+        "risk_level": "moderate"
+      },
+      {
+        "date": "2026-06-05",
+        "value": 41.91,
+        "risk_level": "moderate"
+      }
+    ]
+  },
+  "infestation_score": 0.95,
+  "fusion": {
+    "status": "reproduced",
+    "fusion_rule_version": "v1-max-of-bands",
+    "note": "See favorable_dry_low_infestation.json's fusion note -- identical reasoning, mirrored for the high-score side of the pair.",
+    "expected_verdict": {
+      "nn_verdict": "High",
+      "nn_verdict_source": "the PDM service's verdict thresholds: nn_verdict(0.95) -- score >= 0.70",
+      "weather_dominant_level": "moderate",
+      "weather_dominant_source": "worst (highest-ordinal) risk_level among expected_environmental_pressure.daily_scores, mirroring the PDM service's dominant-level-across-window convention",
+      "combined_verdict": "High",
+      "risk_assessment_level": "High"
+    },
+    "principled": {
+      "status": "reproduced",
+      "fusion_rule_version": "v2-pressure-times-presence",
+      "note": "See favorable_dry_low_infestation.json's principled fusion note -- identical reasoning, mirrored for the high-score side of the pair. 0.95 * pressure_fraction(moderate)=0.40 = 0.38, within the rule's [0.20, 0.50) Moderate band.",
+      "expected_verdict": {
+        "nn_verdict": "High",
+        "weather_dominant_level": "moderate",
+        "combined_verdict": "Moderate",
+        "risk_assessment_level": "Medium"
+      }
+    }
+  }
+}

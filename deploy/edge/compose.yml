@@ -1,0 +1,171 @@
+# Robot (Edge scenario): the inference service, the session orchestrator in its edge profile and the feeder on
+# the device, on an internal network with no route out. The orchestrator assesses without weather, renders the
+# PDF report locally and queues it. Profile "sync" runs the synchronisation once, when a link is available:
+# docker compose --profile sync run --rm sync
+services:
+  inference-jetson:
+    profiles: ["jetson"]
+    build:
+      context: ../../inference
+      dockerfile: Dockerfile.jetson-gpu
+    image: ${INFERENCE_JETSON_IMAGE:-bugfinderai-inference:jetson}
+    runtime: nvidia
+    restart: unless-stopped
+    environment: &inference_env
+      APP_NAME: InferenceService
+      ENVIRONMENT: robot-edge
+      INFERENCE_SERVICE_HOST: 0.0.0.0
+      INFERENCE_SERVICE_PORT: 8010
+      LOG_LEVEL: ${INFERENCE_LOG_LEVEL:-info}
+      INFERENCE_STORAGE_DIR: /code/app/data
+      INFERENCE_DATA_ROOT: /code/app/data
+      INFERENCE_USING_GATEKEEPER: "false"
+      INFERENCE_EXTERNAL_API_KEY: ${INFERENCE_EXTERNAL_API_KEY:?set INFERENCE_EXTERNAL_API_KEY}
+      INFERENCE_ORCH_PUSH_ENABLED: "true"
+      INFERENCE_ORCH_PUSH_PATH: /api/v1/sessions/
+      INFERENCE_ORCH_SERVICE_NAME: orchestrator
+      INFERENCE_ORCH_BASE_URL: http://orchestrator:8020
+      INFERENCE_ORCH_EDGE_SHARED_SECRET: ${EDGE_SHARED_SECRET:?set EDGE_SHARED_SECRET}
+      INFERENCE_BEST_IMAGE_PUSH_ENABLED: "false"
+      INFERENCE_SYNC_QUEUE_DIR: /code/app/sync_queue
+      CONN_AUDIT_LOG_DIR: /code/app/audit
+      INFERENCE_SCENARIO: edge
+      INFERENCE_DETECTOR_IMPL: tensorrt
+      INFERENCE_EXECUTION_TARGET: jetson
+      INFERENCE_ENGINE_PATH: /code/app/model/model.engine
+      INFERENCE_DETECTOR_PROFILE: edge-s-fp16
+      INFERENCE_TARGET_CLASS_SET: '["aphid_infestation_region"]'
+      INFERENCE_CONFIDENCE_FLOOR: "0.4"
+      INFERENCE_TILE_BATCH: "12"
+      # governs POST /internal/acceptance-smoke only
+      INFERENCE_ACCEPTANCE_SMOKE_MODE: ci-dev
+    volumes:
+      - ${DATA_DIR:?set DATA_DIR to the directory shared by the inference service and the feeder}:/code/app/data
+      - ${MODEL_DIR:?set MODEL_DIR to the directory holding the model and its two JSON files}:/code/app/model:ro
+      - sync_queue:/code/app/sync_queue:ro
+      - audit_logs:/code/app/audit
+    networks:
+      edge:
+        aliases: [inference]
+    healthcheck: &inference_health
+      test: ["CMD", "curl", "-sf", "http://localhost:8010/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 90s
+
+  inference-cpu:
+    profiles: ["cpu"]
+    build:
+      context: ../../inference
+    image: ${INFERENCE_CPU_IMAGE:-bugfinderai-inference:cpu}
+    restart: unless-stopped
+    environment:
+      <<: *inference_env
+      INFERENCE_DETECTOR_IMPL: ort
+      INFERENCE_EXECUTION_TARGET: cloud
+      INFERENCE_ONNX_EXECUTION_PROVIDER: CPUExecutionProvider
+      INFERENCE_ONNX_MODEL_PATH: /code/app/model/model.onnx
+      # the profile that accepts the released S fp32 network; the tiled path is selected by the model's record
+      INFERENCE_DETECTOR_PROFILE: legacy-full-frame
+      INFERENCE_TILE_BATCH: "4"
+    volumes:
+      - ${DATA_DIR:?set DATA_DIR}:/code/app/data
+      - ${MODEL_DIR:?set MODEL_DIR}:/code/app/model:ro
+      - sync_queue:/code/app/sync_queue:ro
+      - audit_logs:/code/app/audit
+    networks:
+      edge:
+        aliases: [inference]
+    healthcheck: *inference_health
+
+  orchestrator:
+    build:
+      context: ../../orchestrator
+    image: ${ORCH_IMAGE:-bugfinderai-orchestrator:local}
+    restart: unless-stopped
+    environment:
+      APP_NAME: SessionOrchestrator
+      ENVIRONMENT: robot-edge
+      ORCH_SERVICE_HOST: 0.0.0.0
+      ORCH_SERVICE_PORT: 8020
+      LOG_LEVEL: ${ORCH_LOG_LEVEL:-info}
+      ORCH_DATABASE_URL: sqlite:////code/app/data/orchestrator.db
+      ORCH_DEPLOYMENT_PROFILE: edge
+      ORCH_EDGE_SHARED_SECRET: ${EDGE_SHARED_SECRET:?set EDGE_SHARED_SECRET}
+      ORCH_EDGE_REPORT_DIR: /code/app/data/reports
+      ORCH_EDGE_INFERENCE_BASE_URL: http://inference:8010
+      ORCH_EDGE_INFERENCE_API_KEY: ${INFERENCE_EXTERNAL_API_KEY:?set INFERENCE_EXTERNAL_API_KEY}
+      ORCH_SYNC_QUEUE_DIR: /code/app/sync_queue
+      CONN_AUDIT_LOG_DIR: /code/app/audit
+    volumes:
+      - orchestrator_data:/code/app/data
+      - sync_queue:/code/app/sync_queue
+      - audit_logs:/code/app/audit
+    networks: [edge]
+    healthcheck:
+      test: wget --no-verbose --tries=1 -O /dev/null http://localhost:8020/ready || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  sync:
+    profiles: ["sync"]
+    build:
+      context: ../../orchestrator
+    image: ${ORCH_IMAGE:-bugfinderai-orchestrator:local}
+    entrypoint: ["python", "sync_worker.py"]
+    working_dir: /code/app
+    environment:
+      APP_NAME: SessionOrchestrator
+      ENVIRONMENT: robot-edge
+      LOG_LEVEL: ${ORCH_LOG_LEVEL:-info}
+      ORCH_DATABASE_URL: sqlite:////code/app/data/orchestrator.db
+      ORCH_DEPLOYMENT_PROFILE: edge
+      ORCH_EDGE_SHARED_SECRET: ${EDGE_SHARED_SECRET:?set EDGE_SHARED_SECRET}
+      ORCH_EDGE_REPORT_DIR: /code/app/data/reports
+      ORCH_SYNC_QUEUE_DIR: /code/app/sync_queue
+      ORCH_GATEKEEPER_BASE_URL: ${CLOUD_GATEKEEPER_URL:?set CLOUD_GATEKEEPER_URL for the synchronisation}
+      ORCH_SYNC_GATEKEEPER_USERNAME: ${SYNC_GK_USERNAME:?set SYNC_GK_USERNAME}
+      ORCH_SYNC_GATEKEEPER_PASSWORD: ${SYNC_GK_PASSWORD:?set SYNC_GK_PASSWORD}
+      ORCH_SYNC_REASSESS_ENABLED: ${SYNC_REASSESS:-true}
+    volumes:
+      - orchestrator_data:/code/app/data
+      - sync_queue:/code/app/sync_queue
+    networks: [edge, uplink]
+
+  feeder:
+    profiles: ["feeder"]
+    build:
+      context: ../../feeder
+    image: ${FEEDER_IMAGE:-bugfinderai-feeder:local}
+    environment:
+      REPLAY_DEPLOYMENT_PROFILE: edge
+      REPLAY_DATA_ROOT: /code/app/data
+      REPLAY_SESSION_ID: ${REPLAY_SESSION_ID:-}
+      REPLAY_INFERENCE_BASE_URL: http://inference:8010
+      REPLAY_INFERENCE_API_KEY: ${INFERENCE_EXTERNAL_API_KEY:?set INFERENCE_EXTERNAL_API_KEY}
+      REPLAY_DEFAULT_LATITUDE: ${SESSION_LATITUDE:-}
+      REPLAY_DEFAULT_LONGITUDE: ${SESSION_LONGITUDE:-}
+      REPLAY_PARCEL_ID: ${SESSION_PARCEL_ID:-parcel-001}
+      REPLAY_RESULT_FILE: /out/result.json
+      REPLAY_ACCOUNTING_FILE: /out/accounting.json
+      CONN_AUDIT_LOG_DIR: /code/app/audit
+    volumes:
+      - ${DATA_DIR:?set DATA_DIR}:/code/app/data
+      - ${OUT_DIR:-./out}:/out
+      - audit_logs:/code/app/audit
+    networks: [edge]
+
+networks:
+  edge:
+    name: bugfinderai_edge
+    internal: true
+  uplink:
+    driver: bridge
+
+volumes:
+  orchestrator_data:
+  sync_queue:
+  audit_logs:

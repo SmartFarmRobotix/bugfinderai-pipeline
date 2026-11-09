@@ -1,0 +1,48 @@
+# Reproducible lock of the orchestrator's dependencies.
+#
+# Generated with `.venv/bin/pip freeze` from a venv built from
+# requirements-dev.txt (which itself pulls in requirements.txt). Includes
+# the full transitive closure -- notably the agstack-pnd VCS dependency
+# pinned by commit hash (core only, no [server] extra).
+#
+# Regenerate after any requirements[-dev].txt change:
+#   .venv/bin/pip install -r requirements-dev.txt
+#   .venv/bin/pip freeze > requirements.lock
+agstack-pnd @ git+https://github.com/agstack/opensource-pestmodels.git@9b78504ec544d4bd277b2a6618df558a3c02583e
+alembic==1.13.1
+annotated-types==0.8.0
+anyio==4.14.2
+certifi==2026.7.22
+charset-normalizer==3.4.9
+click==8.4.2
+defusedxml==0.7.1
+fastapi==0.115.6
+fonttools==4.63.0
+fpdf2==2.7.9
+greenlet==3.5.5
+h11==0.16.0
+httpcore==1.0.9
+httpx==0.28.1
+idna==3.18
+iniconfig==2.3.0
+Mako==1.4.1
+MarkupSafe==3.0.3
+numpy==2.4.6
+packaging==26.3
+pillow==12.3.0
+pluggy==1.6.0
+pydantic==2.8.2
+pydantic-settings==2.2.1
+pydantic_core==2.20.1
+pypdf==6.15.0
+pytest==8.3.3
+python-dateutil==2.9.0.post0
+python-dotenv==1.2.2
+python-multipart==0.0.18
+requests==2.32.3
+six==1.17.0
+SQLAlchemy==2.0.31
+starlette==0.41.3
+typing_extensions==4.16.0
+urllib3==2.7.0
+uvicorn==0.32.1

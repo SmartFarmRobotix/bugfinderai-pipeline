@@ -1,0 +1,57 @@
+# Jetson GPU-enabled linux/arm64 inference image. L4T TensorRT base — the nvcr.io/nvidia/l4t-tensorrt
+# image family used to build the engine (JetPack 6.2.3 / L4T r36, TensorRT 10.3.0).
+
+# Multi-stage: pycuda's pip build needs nvcc +
+# CUDA headers (cuda.h), present only in the l4t-tensorrt -devel tag — `pip install
+# pycuda` under the -runtime tag fails with "fatal error: cuda.h: No such file or
+# directory". The compiled wheel is then installed into the lighter
+# -runtime image (4.5GB vs. the devel tag's 12GB), which already ships
+# TensorRT 10.3.0 + CUDA 12.6 runtime libs and needs no compiler at deploy
+# time. Both the wheel build and the final image's TensorRT/CUDA imports
+# only succeed under `docker run --runtime nvidia` (or the equivalent
+# compose `runtime: nvidia` key) — the L4T base expects the host's own GPU
+# driver stubs (e.g. libnvdla_compiler.so) bind-mounted in by the Jetson's
+# nvidia-container-runtime; under the plain runc runtime `import tensorrt`
+# fails on that missing host library. See the inference-jetson compose service
+# for the matching `runtime: nvidia` wiring.
+FROM nvcr.io/nvidia/l4t-tensorrt:r10.3.0-devel AS pycuda-builder
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python3-dev g++ && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install --no-cache-dir wheel && \
+    pip3 wheel --no-cache-dir --wheel-dir /wheels pycuda==2024.1.2
+
+FROM nvcr.io/nvidia/l4t-tensorrt:r10.3.0-runtime
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update && \
+    apt-get install -y curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /code
+
+COPY requirements.txt /code/
+COPY --from=pycuda-builder /wheels /wheels
+# pycuda arrives prebuilt from the -devel stage above (no compiler needed
+# here); the tensorrt Python binding itself ships with this base image's own
+# apt packages (python3-libnvinfer, already on the system dist-packages
+# path) — app/detectors/dfine_tensorrt.py imports both lazily.
+RUN pip3 install --no-cache-dir --upgrade -r /code/requirements.txt && \
+    pip3 install --no-cache-dir /wheels/*.whl && \
+    rm -rf /wheels
+
+COPY . /code
+
+# Sane defaults for the jetson execution target — the inference-jetson compose service sets these explicitly too, but an image run standalone (e.g. a
+# manual smoke test) should not silently fall back to the lookup stub or the
+# wrong target.
+ENV INFERENCE_DETECTOR_IMPL=tensorrt
+ENV INFERENCE_EXECUTION_TARGET=jetson
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8010"]

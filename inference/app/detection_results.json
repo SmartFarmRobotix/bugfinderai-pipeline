@@ -1,0 +1,427 @@
+{
+  "sample-01.png": {
+    "image_width": 1280,
+    "image_height": 800,
+    "count": 2,
+    "boxes": [
+      {
+        "x_min": 0.925,
+        "y_min": 0.5913,
+        "x_max": 0.9648,
+        "y_max": 0.6475,
+        "score": 0.566,
+        "area_px": 1276,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.8734,
+        "y_min": 0.4025,
+        "x_max": 0.8922,
+        "y_max": 0.435,
+        "score": 0.515,
+        "area_px": 331,
+        "label": "brassica_seedling"
+      }
+    ]
+  },
+  "sample-02.png": {
+    "image_width": 1280,
+    "image_height": 800,
+    "count": 3,
+    "boxes": [
+      {
+        "x_min": 0.925,
+        "y_min": 0.5938,
+        "x_max": 0.9648,
+        "y_max": 0.65,
+        "score": 0.573,
+        "area_px": 1403,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.8734,
+        "y_min": 0.405,
+        "x_max": 0.8922,
+        "y_max": 0.4375,
+        "score": 0.516,
+        "area_px": 339,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.4195,
+        "y_min": 0.6887,
+        "x_max": 0.4344,
+        "y_max": 0.7125,
+        "score": 0.514,
+        "area_px": 250,
+        "label": "brassica_seedling"
+      }
+    ]
+  },
+  "sample-03.png": {
+    "image_width": 1280,
+    "image_height": 800,
+    "count": 9,
+    "boxes": [
+      {
+        "x_min": 0.7164,
+        "y_min": 0.5038,
+        "x_max": 0.7727,
+        "y_max": 0.605,
+        "score": 0.7,
+        "area_px": 3650,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.2867,
+        "y_min": 0.4375,
+        "x_max": 0.3242,
+        "y_max": 0.5175,
+        "score": 0.54,
+        "area_px": 960,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.4078,
+        "y_min": 0.6763,
+        "x_max": 0.4367,
+        "y_max": 0.7238,
+        "score": 0.537,
+        "area_px": 680,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.8703,
+        "y_min": 0.6887,
+        "x_max": 0.8938,
+        "y_max": 0.7312,
+        "score": 0.527,
+        "area_px": 574,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.9164,
+        "y_min": 0.4713,
+        "x_max": 0.9391,
+        "y_max": 0.5125,
+        "score": 0.524,
+        "area_px": 529,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.9328,
+        "y_min": 0.885,
+        "x_max": 0.9758,
+        "y_max": 0.92,
+        "score": 0.518,
+        "area_px": 1051,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.6078,
+        "y_min": 0.3488,
+        "x_max": 0.632,
+        "y_max": 0.3825,
+        "score": 0.513,
+        "area_px": 350,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.2797,
+        "y_min": 0.8263,
+        "x_max": 0.2922,
+        "y_max": 0.8638,
+        "score": 0.479,
+        "area_px": 285,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.5969,
+        "y_min": 0.9012,
+        "x_max": 0.6297,
+        "y_max": 0.92,
+        "score": 0.442,
+        "area_px": 337,
+        "label": "brassica_seedling"
+      }
+    ]
+  },
+  "sample-04.png": {
+    "image_width": 1280,
+    "image_height": 800,
+    "count": 6,
+    "boxes": [
+      {
+        "x_min": 0.7195,
+        "y_min": 0.5075,
+        "x_max": 0.7766,
+        "y_max": 0.6088,
+        "score": 0.7,
+        "area_px": 3641,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.4094,
+        "y_min": 0.6775,
+        "x_max": 0.4383,
+        "y_max": 0.725,
+        "score": 0.536,
+        "area_px": 661,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.875,
+        "y_min": 0.695,
+        "x_max": 0.8977,
+        "y_max": 0.7362,
+        "score": 0.524,
+        "area_px": 538,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.6125,
+        "y_min": 0.345,
+        "x_max": 0.6359,
+        "y_max": 0.3837,
+        "score": 0.522,
+        "area_px": 421,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.9227,
+        "y_min": 0.4763,
+        "x_max": 0.9453,
+        "y_max": 0.5162,
+        "score": 0.517,
+        "area_px": 382,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.9469,
+        "y_min": 0.8925,
+        "x_max": 0.9797,
+        "y_max": 0.92,
+        "score": 0.494,
+        "area_px": 590,
+        "label": "brassica_seedling"
+      }
+    ]
+  },
+  "sample-05.png": {
+    "image_width": 1280,
+    "image_height": 800,
+    "count": 9,
+    "boxes": [
+      {
+        "x_min": 0.8602,
+        "y_min": 0.6125,
+        "x_max": 0.9797,
+        "y_max": 0.7675,
+        "score": 0.899,
+        "area_px": 7271,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.4641,
+        "y_min": 0.5212,
+        "x_max": 0.525,
+        "y_max": 0.6088,
+        "score": 0.619,
+        "area_px": 2199,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.9305,
+        "y_min": 0.41,
+        "x_max": 0.9797,
+        "y_max": 0.5038,
+        "score": 0.604,
+        "area_px": 1996,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.9383,
+        "y_min": 0.5475,
+        "x_max": 0.9797,
+        "y_max": 0.6138,
+        "score": 0.551,
+        "area_px": 913,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.1195,
+        "y_min": 0.7688,
+        "x_max": 0.1875,
+        "y_max": 0.8313,
+        "score": 0.542,
+        "area_px": 1310,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.8883,
+        "y_min": 0.8325,
+        "x_max": 0.9062,
+        "y_max": 0.8562,
+        "score": 0.506,
+        "area_px": 258,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.9203,
+        "y_min": 0.7575,
+        "x_max": 0.9469,
+        "y_max": 0.7825,
+        "score": 0.493,
+        "area_px": 414,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.9055,
+        "y_min": 0.7925,
+        "x_max": 0.9273,
+        "y_max": 0.8113,
+        "score": 0.479,
+        "area_px": 281,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.9672,
+        "y_min": 0.8462,
+        "x_max": 0.9797,
+        "y_max": 0.8875,
+        "score": 0.471,
+        "area_px": 294,
+        "label": "brassica_seedling"
+      }
+    ]
+  },
+  "sample-06.png": {
+    "image_width": 1280,
+    "image_height": 800,
+    "count": 2,
+    "boxes": [
+      {
+        "x_min": 0.9164,
+        "y_min": 0.8237,
+        "x_max": 0.9797,
+        "y_max": 0.92,
+        "score": 0.658,
+        "area_px": 2848,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.1195,
+        "y_min": 0.7675,
+        "x_max": 0.1867,
+        "y_max": 0.8438,
+        "score": 0.606,
+        "area_px": 2195,
+        "label": "brassica_seedling"
+      }
+    ]
+  },
+  "sample-07.png": {
+    "image_width": 1280,
+    "image_height": 800,
+    "count": 2,
+    "boxes": [
+      {
+        "x_min": 0.9008,
+        "y_min": 0.5513,
+        "x_max": 0.9242,
+        "y_max": 0.5988,
+        "score": 0.518,
+        "area_px": 518,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.2906,
+        "y_min": 0.8938,
+        "x_max": 0.3047,
+        "y_max": 0.92,
+        "score": 0.509,
+        "area_px": 279,
+        "label": "brassica_seedling"
+      }
+    ]
+  },
+  "sample-08.png": {
+    "image_width": 1280,
+    "image_height": 800,
+    "count": 2,
+    "boxes": [
+      {
+        "x_min": 0.8891,
+        "y_min": 0.7163,
+        "x_max": 0.925,
+        "y_max": 0.7662,
+        "score": 0.539,
+        "area_px": 812,
+        "label": "brassica_seedling"
+      },
+      {
+        "x_min": 0.8531,
+        "y_min": 0.8438,
+        "x_max": 0.8781,
+        "y_max": 0.8925,
+        "score": 0.511,
+        "area_px": 368,
+        "label": "brassica_seedling"
+      }
+    ]
+  },
+  "sample-09.png": {
+    "image_width": 1280,
+    "image_height": 800,
+    "count": 1,
+    "boxes": [
+      {
+        "x_min": 0.1195,
+        "y_min": 0.7688,
+        "x_max": 0.1891,
+        "y_max": 0.8413,
+        "score": 0.596,
+        "area_px": 2116,
+        "label": "brassica_seedling"
+      }
+    ]
+  },
+  "sample-10.png": {
+    "image_width": 1280,
+    "image_height": 800,
+    "count": 1,
+    "boxes": [
+      {
+        "x_min": 0.1195,
+        "y_min": 0.77,
+        "x_max": 0.1766,
+        "y_max": 0.8025,
+        "score": 0.466,
+        "area_px": 768,
+        "label": "brassica_seedling"
+      }
+    ]
+  },
+  "sample-11.png": {
+    "image_width": 1280,
+    "image_height": 800,
+    "count": 0,
+    "boxes": []
+  },
+  "sample-12.png": {
+    "image_width": 1280,
+    "image_height": 800,
+    "count": 1,
+    "boxes": [
+      {
+        "x_min": 0.9047,
+        "y_min": 0.5012,
+        "x_max": 0.925,
+        "y_max": 0.5325,
+        "score": 0.515,
+        "area_px": 289,
+        "label": "brassica_seedling"
+      }
+    ]
+  }
+}

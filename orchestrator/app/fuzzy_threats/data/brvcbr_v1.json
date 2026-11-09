@@ -1,0 +1,70 @@
+{
+  "scientific_name": "Brevicoryne brassicae",
+  "common_name": "Cabbage aphid",
+  "eppo_code": "BRVCBR",
+  "version": "1.0.0",
+  "dossier": "literature (see _authoring_notes)",
+  "dossier_version": "v2",
+  "review_status": "awaiting-agronomic-review",
+  "templated_off": [
+    "Cydia pomonella (codling moth) -- opensource-pestmodels pest_catalog.json",
+    "Bactrocera oleae (olive fly) -- opensource-pestmodels pest_catalog.json"
+  ],
+  "threat_definition": {
+    "scientific_name": "Brevicoryne brassicae",
+    "common_name": "Cabbage aphid",
+    "threat_type": "insect",
+    "crop": "brassica-oleracea",
+    "bio_params": {
+      "t_base": 4.0,
+      "t_lethal_min": -5.0,
+      "t_lethal_max": 35.0,
+      "t_optimal_min": 20.0,
+      "t_optimal_max": 25.0,
+      "min_streak": 2,
+      "min_wetness_hours_critical": 24.0,
+      "min_wetness_hours_high": 24.0,
+      "extra": {
+        "thermal_constant_dd_generation": 142.9
+      }
+    },
+    "fuzzy_rules": [
+      {
+        "hum_lo": 0,
+        "hum_hi": 100,
+        "temp_lo": 20,
+        "temp_hi": 25,
+        "rain_min": 0.0,
+        "risk_level": "high"
+      },
+      {
+        "hum_lo": 0,
+        "hum_hi": 100,
+        "temp_lo": 15,
+        "temp_hi": 30,
+        "rain_min": 0.0,
+        "risk_level": "moderate"
+      },
+      {
+        "hum_lo": 0,
+        "hum_hi": 100,
+        "temp_lo": 0,
+        "temp_hi": 38,
+        "rain_min": 0.0,
+        "risk_level": "low"
+      }
+    ],
+    "special_rules": {}
+  },
+  "_authoring_notes": [
+    "No 'critical' tier is encoded: the literature supports a single 20-25 C favourable band and a 15-30 C plausible-activity band, with nothing distinguishing a more-severe-than-high tier; the PDM weather-rule ruleset for this pest reaches the same three tiers.",
+    "Humidity (hum_lo/hum_hi) is set to the full 0-100 range on every rule, i.e. deliberately non-discriminating: the sign of the humidity effect is contested in the field literature.",
+    "rain_min is 0.0 on every rule, i.e. precipitation never raises fuzzy membership for any band. The engine's rain_min mechanism can only require a minimum rainfall for a rule to gain strength, which does not fit an aphid.",
+    "t_lethal_min=-5.0 C is an assumption, not literature-sourced: no source gives a lower lethal bound for B. brassicae; -5.0 C follows the insect-template convention (Bactrocera oleae uses -5.0 C).",
+    "t_lethal_max=35.0 C: no development was recorded at 35 C in a single-clone, constant-temperature lab trial (Soh et al. 2018), treated as a cautious upper bound.",
+    "t_optimal_min/max = 20.0/25.0 C from the adopted favourable/high-pressure band, narrowed to exclude 30 C because of the r_m reversal reported by Soh et al. 2018.",
+    "min_streak=2 and min_wetness_hours_critical/high=24.0 are inherited unchanged from the insect-template convention (Cydia pomonella and Bactrocera oleae use these values), not separately sourced.",
+    "No pheno_lo/pheno_hi/pheno_frac_* fields are set: no canonical generations-per-season figure for BRVCBR was found (15-20 generations per crop cycle in Argentina against 30 or more per year in warm climates).",
+    "No agronomist review has been made of this definition yet."
+  ]
+}

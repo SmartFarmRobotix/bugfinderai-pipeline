@@ -1,0 +1,7 @@
+-r requirements.txt
+pytest==8.3.3
+
+# tests: extracting rendered text from a
+# generated PDF to assert report-content markers are actually present in
+# the output, not just in the composed payload dict.
+pypdf==6.15.0

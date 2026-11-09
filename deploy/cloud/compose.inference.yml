@@ -1,0 +1,114 @@
+# Cloud inference: the inference service on a CUDA GPU (profile "gpu") or on the CPU (profile "cpu").
+# The model directory (INFERENCE_MODEL_DIR) holds model.onnx, model.onnx.provenance.json and
+# designation-manifest.json from the release (see README). Joins the network of compose.yml.
+services:
+  inference-gpu:
+    profiles: ["gpu"]
+    build:
+      context: ../../inference
+      dockerfile: Dockerfile.cloud-gpu
+    image: ${INFERENCE_GPU_IMAGE:-bugfinderai-inference:cuda}
+    restart: unless-stopped
+    environment: &inference_env
+      APP_NAME: InferenceService
+      ENVIRONMENT: cloud
+      INFERENCE_SERVICE_HOST: 0.0.0.0
+      INFERENCE_SERVICE_PORT: 8010
+      LOG_LEVEL: ${INFERENCE_LOG_LEVEL:-info}
+      INFERENCE_STORAGE_DIR: /code/app/data
+      INFERENCE_USING_GATEKEEPER: "true"
+      INFERENCE_GATEKEEPER_BASE_URL: http://gatekeeper:8001
+      INFERENCE_GATEKEEPER_USERNAME: ${GK_SUPERUSER_USERNAME:-admin}
+      INFERENCE_GATEKEEPER_PASSWORD: ${GK_SUPERUSER_PASSWORD:?set GK_SUPERUSER_PASSWORD}
+      INFERENCE_GATEKEEPER_TOKEN_ENDPOINT: /api/login/
+      INFERENCE_GATEKEEPER_REGISTER_ENDPOINT: /api/register_service/
+      INFERENCE_SERVICE_NAME: inference
+      INFERENCE_SELF_BASE_URL: http://inference:8010/
+      INFERENCE_EXTERNAL_API_KEY: ${INFERENCE_EXTERNAL_API_KEY:?set INFERENCE_EXTERNAL_API_KEY}
+      INFERENCE_ORCH_PUSH_ENABLED: "true"
+      INFERENCE_ORCH_PUSH_PATH: /api/v1/sessions/
+      INFERENCE_ORCH_SERVICE_NAME: orchestrator
+      INFERENCE_BEST_IMAGE_PUSH_ENABLED: "true"
+      INFERENCE_RS_SERVICE_NAME: reporting
+      INFERENCE_RS_UPLOAD_PATH: /api/v1/openagri-report/pest-session-images/
+      INFERENCE_SCENARIO: cloud
+      INFERENCE_DETECTOR_IMPL: ort
+      INFERENCE_EXECUTION_TARGET: cloud
+      INFERENCE_ONNX_MODEL_PATH: /code/app/model/model.onnx
+      # the profile that accepts the released S fp32 network; the tiled path is selected by the model's record
+      INFERENCE_DETECTOR_PROFILE: legacy-full-frame
+      INFERENCE_TARGET_CLASS_SET: '["aphid_infestation_region"]'
+      INFERENCE_CONFIDENCE_FLOOR: "0.4"
+      INFERENCE_TILE_BATCH: ${INFERENCE_TILE_BATCH:-4}
+      # governs POST /internal/acceptance-smoke only
+      INFERENCE_ACCEPTANCE_SMOKE_MODE: ci-dev
+      INFERENCE_ONNX_EXECUTION_PROVIDER: CUDAExecutionProvider
+    volumes:
+      - inference_data:/code/app/data
+      - ${INFERENCE_MODEL_DIR:?set INFERENCE_MODEL_DIR to the directory holding model.onnx and its two JSON files}:/code/app/model:ro
+    ports:
+      - ${INFERENCE_HOST_PORT:-8011}:8010
+    networks:
+      cloud_services:
+        aliases: [inference]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck: &inference_health
+      test: ["CMD", "curl", "-sf", "http://localhost:8010/healthz"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+      start_period: 90s
+
+  inference-cpu:
+    profiles: ["cpu"]
+    build:
+      context: ../../inference
+    image: ${INFERENCE_CPU_IMAGE:-bugfinderai-inference:cpu}
+    restart: unless-stopped
+    environment:
+      <<: *inference_env
+      INFERENCE_ONNX_EXECUTION_PROVIDER: CPUExecutionProvider
+    volumes:
+      - inference_data:/code/app/data
+      - ${INFERENCE_MODEL_DIR:?set INFERENCE_MODEL_DIR to the directory holding model.onnx and its two JSON files}:/code/app/model:ro
+    ports:
+      - ${INFERENCE_HOST_PORT:-8011}:8010
+    networks:
+      cloud_services:
+        aliases: [inference]
+    healthcheck: *inference_health
+
+  feeder:
+    profiles: ["feeder"]
+    build:
+      context: ../../feeder
+    image: ${FEEDER_IMAGE:-bugfinderai-feeder:local}
+    environment:
+      REPLAY_DEPLOYMENT_PROFILE: cloud
+      REPLAY_DATA_ROOT: /app/data
+      REPLAY_SESSION_ID: ${REPLAY_SESSION_ID:-}
+      REPLAY_INFERENCE_BASE_URL: http://inference:8010
+      REPLAY_INFERENCE_API_KEY: ${INFERENCE_EXTERNAL_API_KEY:?set INFERENCE_EXTERNAL_API_KEY}
+      REPLAY_DEFAULT_LATITUDE: ${SESSION_LATITUDE:-}
+      REPLAY_DEFAULT_LONGITUDE: ${SESSION_LONGITUDE:-}
+      REPLAY_PARCEL_ID: ${SESSION_PARCEL_ID:-parcel-001}
+      REPLAY_RESULT_FILE: /out/result.json
+      REPLAY_ACCOUNTING_FILE: /out/accounting.json
+    volumes:
+      - ${SESSIONS_DIR:?set SESSIONS_DIR to the directory holding sessions/<id>/manifest.json and images/}:/app/data
+      - ${OUT_DIR:-./out}:/out
+    networks: [cloud_services]
+
+networks:
+  cloud_services:
+    external: true
+    name: bugfinderai_cloud_services
+
+volumes:
+  inference_data:

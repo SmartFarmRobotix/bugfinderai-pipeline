@@ -1,0 +1,27 @@
+BugFinderAI pest-session pipeline
+Copyright 2026 Smart Farm Robotix VCC
+
+This product includes software developed by Smart Farm Robotix VCC in the
+OpenAgri open call project SIP12 (BugFinderAI), funded by the European Union
+(grant agreement 101134083).
+
+The trained network published with this product is a fine-tuned derivative of
+D-FINE (https://github.com/Peterande/D-FINE), licensed under the Apache License,
+Version 2.0, starting from its public COCO checkpoint.
+
+Third-party material under other licences:
+
+- orchestrator/app/report_pdf/pest_session_pdf_core.py is derived from the
+  OpenAgri Reporting service (https://github.com/agstack/OpenAgri-ReportingService)
+  and stays under the European Union Public Licence v. 1.2; the licence text is
+  orchestrator/app/report_pdf/LICENSE-EUPL-1.2.
+- orchestrator/app/report_pdf/fonts/FreeSerif.ttf and FreeSerifBold.ttf are GNU
+  FreeFont, copyright the Free Software Foundation, GNU General Public License v3
+  or later with the font-embedding exception; see fonts/COPYING and fonts/README.md.
+- orchestrator/app/report_pdf/assets/eu.png is the emblem of the European Union,
+  reproduced as the funding acknowledgement the grant requires, under the EU's rules
+  for the use of the emblem; assets/openagri_logo.png is the logo of the OpenAgri
+  project. Neither image is licensed under the Apache License.
+
+The fuzzy risk engine is the agstack-pnd library (Apache-2.0), installed as a
+dependency and not included here.

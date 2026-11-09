@@ -1,0 +1,37 @@
+{
+  "@context": ["https://w3id.org/ocsm/main-context.jsonld"],
+  "@graph": [
+    {
+      "@id": "urn:openagri:crop:cucumis-sativus", "@type": ["AgriCrop"], "identifier": "cucumis-sativus",
+      "name": "Cucumber", "scientificName": "Cucumis sativus", "agroVocConcept": "http://aims.fao.org/aos/agrovoc/c_2004",
+      "growthStages": [
+        {"@type": "AgriGrowthStage", "identifier": "BBCH-10", "name": "First true leaf", "description": "First true leaf unfolds."},
+        {"@type": "AgriGrowthStage", "identifier": "BBCH-19", "name": "Nine or more leaves", "description": "Vegetative canopy established."},
+        {"@type": "AgriGrowthStage", "identifier": "BBCH-61", "name": "Beginning of flowering", "description": "First flowers open."},
+        {"@type": "AgriGrowthStage", "identifier": "BBCH-71", "name": "First fruit set", "description": "First fruits reach typical size."},
+        {"@type": "AgriGrowthStage", "identifier": "BBCH-89", "name": "Harvest maturity", "description": "Harvest-ready fruit."}
+      ]
+    },
+    {
+      "@id": "urn:eppo:MYZUPE", "@type": ["AgriPest"], "identifier": "MYZUPE", "name": "Green peach aphid", "scientificName": "Myzus persicae",
+      "eppoConcept": "https://gd.eppo.int/taxon/MYZUPE", "affectsCrop": {"@id": "urn:openagri:crop:cucumis-sativus"}
+    },
+    {
+      "@id": "urn:eppo:APHIGO", "@type": ["AgriPest"], "identifier": "APHIGO", "name": "Melon aphid", "scientificName": "Aphis gossypii",
+      "eppoConcept": "https://gd.eppo.int/taxon/APHIGO", "affectsCrop": {"@id": "urn:openagri:crop:cucumis-sativus"}
+    },
+    {
+      "@id": "urn:openagri:pest-host-relationship:MYZUPE-cucumis-sativus", "@type": ["AgriPestHostRelationship"], "identifier": "MYZUPE-cucumis-sativus",
+      "hasPest": {"@id": "urn:eppo:MYZUPE"}, "hasCrop": {"@id": "urn:openagri:crop:cucumis-sativus"}
+    },
+    {
+      "@id": "urn:openagri:pest-host-relationship:APHIGO-cucumis-sativus", "@type": ["AgriPestHostRelationship"], "identifier": "APHIGO-cucumis-sativus",
+      "hasPest": {"@id": "urn:eppo:APHIGO"}, "hasCrop": {"@id": "urn:openagri:crop:cucumis-sativus"}
+    },
+    {
+      "@id": "urn:openagri:ocsm-profile:cucumber-pest-crop", "@type": ["OCSMProfile"], "identifier": "cucumber-pest-crop",
+      "name": "Cucumber aphid pest/crop context", "conformsTo": "https://w3id.org/ocsm/main-context.jsonld",
+      "includes": [{"@id": "urn:openagri:crop:cucumis-sativus"}, {"@id": "urn:eppo:MYZUPE"}, {"@id": "urn:eppo:APHIGO"}, {"@id": "urn:openagri:pest-host-relationship:MYZUPE-cucumis-sativus"}, {"@id": "urn:openagri:pest-host-relationship:APHIGO-cucumis-sativus"}]
+    }
+  ]
+}

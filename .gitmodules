@@ -1,0 +1,16 @@
+[submodule "deploy/services/OpenAgri-GateKeeper"]
+	path = deploy/services/OpenAgri-GateKeeper
+	url = https://github.com/SmartFarmRobotix/OpenAgri-GateKeeper.git
+	branch = sip12
+[submodule "deploy/services/OpenAgri-PestAndDiseaseManagement"]
+	path = deploy/services/OpenAgri-PestAndDiseaseManagement
+	url = https://github.com/SmartFarmRobotix/OpenAgri-PestAndDiseaseManagement.git
+	branch = sip12
+[submodule "deploy/services/OpenAgri-WeatherService"]
+	path = deploy/services/OpenAgri-WeatherService
+	url = https://github.com/SmartFarmRobotix/OpenAgri-WeatherService.git
+	branch = sip12
+[submodule "deploy/services/OpenAgri-ReportingService"]
+	path = deploy/services/OpenAgri-ReportingService
+	url = https://github.com/SmartFarmRobotix/OpenAgri-ReportingService.git
+	branch = sip12

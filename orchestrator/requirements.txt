@@ -1,0 +1,17 @@
+fastapi==0.115.6
+pydantic==2.8.2
+pydantic-settings==2.2.1
+python-multipart==0.0.18
+uvicorn==0.32.1
+
+SQLAlchemy==2.0.31
+alembic==1.13.1
+requests==2.32.3
+
+# PDF rendering for app/report_pdf/ (the same pinned version as the OpenAgri Reporting service).
+fpdf2==2.7.9
+
+# Fuzzy risk engine: agstack-pnd core only, no [server] extra
+# (that extra pulls FastAPI/Postgres/asyncpg/apscheduler/mcp -- not needed here).
+# Not on PyPI; pinned to an exact commit.
+agstack-pnd @ git+https://github.com/agstack/opensource-pestmodels.git@9b78504ec544d4bd277b2a6618df558a3c02583e

@@ -1,0 +1,288 @@
+# Cloud host: the OpenAgri services (Gatekeeper, Pest and Disease Management, Weather, Reporting) and the
+# session orchestrator. Copy .env.example to .env and fill the values marked REQUIRED.
+# The four OpenAgri services are built from the SmartFarmRobotix forks checked out as git submodules under
+# ../services/ (branch sip12): clone this repository with --recurse-submodules, or set GK_IMAGE, PDM_IMAGE,
+# WEATHER_IMAGE and REPORTING_IMAGE to images built from those forks.
+services:
+  gk_mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${GK_MYSQL_DATABASE:-gatekeeper}
+      MYSQL_ROOT_PASSWORD: ${GK_MYSQL_ROOT_PASSWORD:?set GK_MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${GK_MYSQL_USER:-gatekeeper_admin}
+      MYSQL_PASSWORD: ${GK_MYSQL_PASSWORD:?set GK_MYSQL_PASSWORD}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+    volumes:
+      - gk_mysql:/var/lib/mysql
+    networks: [cloud_services]
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u${GK_MYSQL_USER:-gatekeeper_admin} -p${GK_MYSQL_PASSWORD:?set GK_MYSQL_PASSWORD} --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  gatekeeper:
+    build:
+      context: ../services/OpenAgri-GateKeeper
+    image: ${GK_IMAGE:-openagri-gatekeeper:sip12}
+    restart: unless-stopped
+    depends_on:
+      gk_mysql:
+        condition: service_healthy
+    environment:
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?set DJANGO_SECRET_KEY}
+      JWT_SIGNING_KEY: ${JWT_SIGNING_KEY:?set JWT_SIGNING_KEY}
+      JWT_ALG: HS256
+      JWT_ACCESS_TOKEN_MINUTES: ${GK_JWT_ACCESS_TOKEN_MINUTES:-60}
+      JWT_REFRESH_TOKEN_DAYS: ${GK_JWT_REFRESH_TOKEN_DAYS:-30}
+      APP_HOST: 0.0.0.0
+      APP_PORT: "8001"
+      SUPERUSER_USERNAME: ${GK_SUPERUSER_USERNAME:-admin}
+      SUPERUSER_EMAIL: ${GK_SUPERUSER_EMAIL:-admin@example.com}
+      SUPERUSER_PASSWORD: ${GK_SUPERUSER_PASSWORD:?set GK_SUPERUSER_PASSWORD}
+      DB_HOST: gk_mysql
+      DB_PORT: "3306"
+      DB_USER: ${GK_MYSQL_USER:-gatekeeper_admin}
+      DB_PASS: ${GK_MYSQL_PASSWORD:?set GK_MYSQL_PASSWORD}
+      DB_NAME: ${GK_MYSQL_DATABASE:-gatekeeper}
+      EXTRA_ALLOWED_HOSTS: ${GK_EXTRA_ALLOWED_HOSTS:-gatekeeper}
+      INTERNAL_GK_URL: http://gatekeeper:8001/
+      GK_ANON_THROTTLE_RATE: ${GK_ANON_THROTTLE_RATE:-10000/hour}
+    ports:
+      - ${GK_HOST_PORT:-8001}:8001
+    networks: [cloud_services]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8001/healthz/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  pdm_db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${PDM_POSTGRES_DB:-pdm}
+      POSTGRES_USER: ${PDM_POSTGRES_USER:-pdm_admin}
+      POSTGRES_PASSWORD: ${PDM_POSTGRES_PASSWORD:?set PDM_POSTGRES_PASSWORD}
+    volumes:
+      - pdm_db:/var/lib/postgresql/data
+    networks: [cloud_services]
+    healthcheck:
+      test: pg_isready -U ${PDM_POSTGRES_USER:-pdm_admin} -d ${PDM_POSTGRES_DB:-pdm}
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  pdm:
+    build:
+      context: ../services/OpenAgri-PestAndDiseaseManagement
+    image: ${PDM_IMAGE:-openagri-pdm:sip12}
+    restart: unless-stopped
+    command: ["/code/entrypoint.sh", "8003"]
+    depends_on:
+      pdm_db:
+        condition: service_healthy
+      gatekeeper:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: pdm_db
+      POSTGRES_USER: ${PDM_POSTGRES_USER:-pdm_admin}
+      POSTGRES_PASSWORD: ${PDM_POSTGRES_PASSWORD:?set PDM_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${PDM_POSTGRES_DB:-pdm}
+      POSTGRES_PORT: "5432"
+      ACCESS_TOKEN_EXPIRATION_TIME: 240
+      REFRESH_TOKEN_EXPIRATION_TIME: 1600
+      JWT_KEY: ${JWT_SIGNING_KEY:?set JWT_SIGNING_KEY}
+      JWT_ALGORITHM: HS256
+      SERVICE_PORT: "8003"
+      SERVICE_NAME: pdm
+      LOGGING: INFO
+      CORS_ORIGINS: '["*"]'
+      USING_GATEKEEPER: "true"
+      GATEKEEPER_BASE_URL: http://gatekeeper:8001/
+      GATEKEEPER_USERNAME: ${GK_SUPERUSER_USERNAME:-admin}
+      GATEKEEPER_PASSWORD: ${GK_SUPERUSER_PASSWORD:?set GK_SUPERUSER_PASSWORD}
+      PDM_WEATHER_ENABLED: "true"
+    ports:
+      - ${PDM_HOST_PORT:-8003}:8003
+    networks: [cloud_services]
+    healthcheck:
+      test: wget --no-verbose --tries=1 -O /dev/null http://localhost:8003/ready || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  weather_mongo:
+    image: mongo:7
+    command: mongod
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${WEATHER_MONGO_ROOT_USERNAME:-weather_admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${WEATHER_MONGO_ROOT_PASSWORD:?set WEATHER_MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: openagridb
+    volumes:
+      - weather_mongo:/data/db
+    networks: [cloud_services]
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --quiet --eval 'db.runCommand({ping:1}).ok' || mongo --quiet --eval 'db.runCommand({ping:1}).ok'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  weathersrv:
+    build:
+      context: ../services/OpenAgri-WeatherService
+      dockerfile: Dockerfile.x86_64
+    image: ${WEATHER_IMAGE:-openagri-weatherservice:sip12}
+    restart: unless-stopped
+    depends_on:
+      weather_mongo:
+        condition: service_started
+      gatekeeper:
+        condition: service_healthy
+    environment:
+      LOGGING_LEVEL: INFO
+      JWT_KEY: ${JWT_SIGNING_KEY:?set JWT_SIGNING_KEY}
+      ALGORITHM: HS256
+      CRYPT_CONTEXT_SCHEME: bcrypt
+      ACCESS_TOKEN_EXPIRE_MINUTES: 240
+      WEATHER_SRV_PORT: "8010"
+      WEATHER_SRV_HOSTNAME: weathersrv
+      WEATHER_SRV_DATABASE_URI: mongodb://${WEATHER_MONGO_ROOT_USERNAME:-weather_admin}:${WEATHER_MONGO_ROOT_PASSWORD:?set WEATHER_MONGO_ROOT_PASSWORD}@weather_mongo:27017/
+      WEATHER_SRV_DATABASE_NAME: openagridb
+      EXTRA_ALLOWED_HOSTS: weathersrv,localhost,127.0.0.1
+      WEATHER_SRV_OPENWEATHERMAP_API_KEY: ${WEATHER_SRV_OPENWEATHERMAP_API_KEY:-}
+      GATEKEEPER_URL: http://gatekeeper:8001/
+      WEATHER_SRV_GATEKEEPER_USER: ${GK_SUPERUSER_USERNAME:-admin}
+      WEATHER_SRV_GATEKEEPER_PASSWORD: ${GK_SUPERUSER_PASSWORD:?set GK_SUPERUSER_PASSWORD}
+      INTERVAL_THI_TO_FARMCALENDAR: 8
+    ports:
+      - ${WEATHER_HOST_PORT:-8010}:8010
+    networks: [cloud_services]
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8010/ready', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  reporting_db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${REPORTING_POSTGRES_USER:-reporting_admin}
+      POSTGRES_PASSWORD: ${REPORTING_POSTGRES_PASSWORD:?set REPORTING_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${REPORTING_POSTGRES_DB:-reporting}
+      PGPORT: "5439"
+    volumes:
+      - reporting_db:/var/lib/postgresql/data
+    networks: [cloud_services]
+    healthcheck:
+      test: pg_isready -U ${REPORTING_POSTGRES_USER:-reporting_admin} -d ${REPORTING_POSTGRES_DB:-reporting}
+      interval: 5s
+      retries: 3
+      start_period: 10s
+
+  reporting:
+    build:
+      context: ../services/OpenAgri-ReportingService
+    image: ${REPORTING_IMAGE:-openagri-reportingservice:sip12}
+    restart: unless-stopped
+    command: ["/code/entrypoint.sh", "8009"]
+    depends_on:
+      reporting_db:
+        condition: service_healthy
+      gatekeeper:
+        condition: service_healthy
+    environment:
+      REPORTING_POSTGRES_HOST: reporting_db
+      REPORTING_POSTGRES_USER: ${REPORTING_POSTGRES_USER:-reporting_admin}
+      REPORTING_POSTGRES_PASSWORD: ${REPORTING_POSTGRES_PASSWORD:?set REPORTING_POSTGRES_PASSWORD}
+      REPORTING_POSTGRES_DB: ${REPORTING_POSTGRES_DB:-reporting}
+      REPORTING_POSTGRES_PORT: "5439"
+      JWT_ACCESS_TOKEN_EXPIRATION_TIME: 240
+      JWT_SIGNING_KEY: ${JWT_SIGNING_KEY:?set JWT_SIGNING_KEY}
+      REPORTING_SERVICE_NAME: reporting
+      REPORTING_SERVICE_PORT: "8009"
+      REPORTING_USING_GATEKEEPER: "true"
+      REPORTING_GATEKEEPER_BASE_URL: http://gatekeeper:8001/
+      REPORTING_GATEKEEPER_USERNAME: ${GK_SUPERUSER_USERNAME:-admin}
+      REPORTING_GATEKEEPER_PASSWORD: ${GK_SUPERUSER_PASSWORD:?set GK_SUPERUSER_PASSWORD}
+      REPORTING_BACKEND_CORS_ORIGINS: '["*"]'
+      PDF_DIRECTORY: /code/app/user_reports/
+      REPORTING_EDGE_REPORT_OWNER_USER_ID: ${REPORTING_EDGE_REPORT_OWNER_USER_ID:-}
+    volumes:
+      - reporting_reports:/code/app/user_reports
+    ports:
+      - ${REPORTING_HOST_PORT:-8009}:8009
+    networks: [cloud_services]
+    healthcheck:
+      test: wget -q -O- --tries=1 http://127.0.0.1:8009/ready || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  orchestrator:
+    build:
+      context: ../../orchestrator
+    image: ${ORCH_IMAGE:-bugfinderai-orchestrator:local}
+    restart: unless-stopped
+    depends_on:
+      gatekeeper:
+        condition: service_healthy
+      pdm:
+        condition: service_healthy
+      reporting:
+        condition: service_healthy
+    environment:
+      APP_NAME: SessionOrchestrator
+      ENVIRONMENT: cloud
+      ORCH_SERVICE_HOST: 0.0.0.0
+      ORCH_SERVICE_PORT: "8020"
+      ORCH_SERVICE_NAME: orchestrator
+      LOG_LEVEL: ${ORCH_LOG_LEVEL:-info}
+      ORCH_DATABASE_URL: sqlite:////code/app/data/orchestrator.db
+      ORCH_MAX_OUTBOUND_RETRIES: 3
+      ORCH_DEPLOYMENT_PROFILE: cloud
+      ORCH_GATEKEEPER_BASE_URL: http://gatekeeper:8001
+      ORCH_GATEKEEPER_USERNAME: ${GK_SUPERUSER_USERNAME:-admin}
+      ORCH_GATEKEEPER_PASSWORD: ${GK_SUPERUSER_PASSWORD:?set GK_SUPERUSER_PASSWORD}
+      ORCH_GATEKEEPER_TOKEN_ENDPOINT: /api/login/
+      ORCH_GATEKEEPER_TIMEOUT_SECONDS: 10
+      ORCH_GATEKEEPER_VALIDATE_PATH: /api/validate_token/
+      ORCH_PDM_SERVICE_NAME: pdm
+      ORCH_PDM_RISK_ASSESSMENT_PATH: /api/v1/risk-assessment/
+      ORCH_PDM_CALL_TIMEOUT_SECONDS: 15
+      ORCH_RS_SERVICE_NAME: reporting
+      ORCH_RS_PEST_SESSION_REPORT_PATH: /api/v1/openagri-report/pest-session-report/
+      ORCH_RS_CALL_TIMEOUT_SECONDS: 15
+    volumes:
+      - orchestrator_data:/code/app/data
+    ports:
+      - ${ORCH_HOST_PORT:-8021}:8020
+    networks: [cloud_services]
+    healthcheck:
+      test: wget --no-verbose --tries=1 -O /dev/null http://localhost:8020/ready || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+networks:
+  cloud_services:
+    name: bugfinderai_cloud_services
+
+volumes:
+  gk_mysql:
+  pdm_db:
+  weather_mongo:
+  reporting_db:
+  reporting_reports:
+  orchestrator_data:

@@ -1,0 +1,59 @@
+{
+  "scientific_name": "Aphis gossypii",
+  "common_name": "Melon aphid",
+  "eppo_code": "APHIGO",
+  "version": "1.0.0",
+  "dossier": "literature (see _authoring_notes)",
+  "dossier_version": "1",
+  "review_status": "literature-sourced, not agronomist-reviewed",
+  "templated_off": [
+    "brvcbr_v1.json"
+  ],
+  "threat_definition": {
+    "scientific_name": "Aphis gossypii",
+    "common_name": "Melon aphid",
+    "threat_type": "insect",
+    "crop": "cucumis-sativus",
+    "bio_params": {
+      "t_base": 6.0,
+      "t_lethal_min": -5.0,
+      "t_lethal_max": 35.0,
+      "t_optimal_min": 22.5,
+      "t_optimal_max": 30.0,
+      "min_streak": 2,
+      "min_wetness_hours_critical": 24.0,
+      "min_wetness_hours_high": 24.0
+    },
+    "fuzzy_rules": [
+      {
+        "hum_lo": 0,
+        "hum_hi": 100,
+        "temp_lo": 22,
+        "temp_hi": 30,
+        "rain_min": 0.0,
+        "risk_level": "high"
+      },
+      {
+        "hum_lo": 0,
+        "hum_hi": 100,
+        "temp_lo": 15,
+        "temp_hi": 32.5,
+        "rain_min": 0.0,
+        "risk_level": "moderate"
+      },
+      {
+        "hum_lo": 0,
+        "hum_hi": 100,
+        "temp_lo": 0,
+        "temp_hi": 38,
+        "rain_min": 0.0,
+        "risk_level": "low"
+      }
+    ],
+    "special_rules": {}
+  },
+  "_authoring_notes": [
+    "Kocourek et al. 1994 and Satar et al. 2005 supply the cucumber Aphis gossypii values; Davis et al. 2006 is the Myzus persicae comparison.",
+    "t_lethal_min, min_streak and both wetness-hour values are carried from the brvcbr_v1.json template and are unsourced for cucumber aphids."
+  ]
+}

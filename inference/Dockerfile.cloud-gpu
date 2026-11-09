@@ -1,0 +1,51 @@
+# Cloud GPU-enabled inference image. CUDA/cuDNN runtime base, ONNX-Runtime-CUDA detector — the real
+# deployment artifact for the "cloud" execution target, declared by
+# deploy/cloud/compose.inference.yml as its default image. Building this
+# image needs no GPU (base-image pull + pip install only); actually RUNNING
+# it needs an NVIDIA GPU and nvidia-container-toolkit on the host.
+
+# ONNX Runtime's CUDAExecutionProvider on a plain CUDA/cuDNN base. tensorrt/pycuda are deliberately NOT installed
+# here; they remain Jetson-only (Dockerfile.jetson-gpu).
+
+# nvidia/cuda:12.6.3-cudnn-runtime-ubuntu22.04 ships CUDA 12.6 + cuDNN 9,
+# which onnxruntime-gpu 1.20.x's CUDAExecutionProvider is built against
+# (onnxruntime.ai CUDA execution provider requirements: CUDA 12.x / cuDNN
+# 9.x for the 1.20 release line) — no TensorRT package is present in this
+# base image.
+FROM nvidia/cuda:12.6.3-cudnn-runtime-ubuntu22.04
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl python3 python3-pip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /code
+
+COPY requirements.txt /code/
+# requirements.txt installs the CPU-only `onnxruntime` package (dev/CI default, pinned 1.20.1). onnxruntime and onnxruntime-gpu both
+# ship a python module named `onnxruntime` and must never coexist in one
+# environment (the ONNX Runtime install docs flag this as a known conflict)
+# — so the cloud image uninstalls the CPU package immediately after and
+# replaces it with onnxruntime-gpu, which provides CUDAExecutionProvider.
+# Pinned to 1.20.2, not 1.20.1: onnxruntime-gpu has no 1.20.1 release on
+# PyPI (its release cadence doesn't mirror onnxruntime's patch numbers
+# exactly) — 1.20.2 is the nearest same-minor-line release, still requiring
+# CUDA 12.x/cuDNN 9.x per the CUDA execution provider's 1.20 requirements.
+RUN pip3 install --no-cache-dir --upgrade -r /code/requirements.txt && \
+    pip3 uninstall -y onnxruntime && \
+    pip3 install --no-cache-dir onnxruntime-gpu==1.20.2
+
+COPY . /code
+
+# Sane defaults for the cloud execution target — deploy/cloud/compose.inference.yml
+# sets these explicitly too, but an image run standalone (e.g. a manual smoke
+# test) should not silently fall back to the lookup stub or the wrong target.
+ENV INFERENCE_DETECTOR_IMPL=ort
+ENV INFERENCE_EXECUTION_TARGET=cloud
+ENV INFERENCE_ONNX_EXECUTION_PROVIDER=CUDAExecutionProvider
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8010"]

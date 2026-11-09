@@ -1,0 +1,206 @@
+{
+  "@context": [
+    "https://w3id.org/ocsm/main-context.jsonld"
+  ],
+  "@graph": [
+    {
+      "@id": "urn:eppo:BRVCBR",
+      "@type": [
+        "AgriPest"
+      ],
+      "identifier": "BRVCBR",
+      "name": "Cabbage aphid",
+      "alternateName": "Mealy cabbage aphid",
+      "description": "Brevicoryne brassicae (L.) is the cabbage aphid, a highly destructive sap-sucking insect pest that forms dense colonies on Brassica crops. It causes direct damage by weakening plants and acts as a vector for plant viruses including Turnip mosaic virus and Cauliflower mosaic virus, leading to significant yield and quality losses across Europe and globally.",
+      "eppoConcept": "https://gd.eppo.int/taxon/BRVCBR",
+      "scientificName": "Brevicoryne brassicae",
+      "affectsCrop": {
+        "@id": "urn:openagri:crop:brassica-oleracea"
+      },
+      "symptomDescription": "Dense grey-green to waxy-white colonies on the underside of leaves, growing tips and flower stalks. Infested leaves become yellowed, distorted and stunted. Heavily infested plants may collapse entirely. Honeydew secretions promote sooty mould growth. Winged (alate) forms signal active migration between fields.",
+      "managementNotes": "Monitor from early spring for wingless (apterous) foundresses and winged colonisers. Apply insecticides (pyrethroids, neonicotinoids) at early infestation stages before colonies establish. Encourage natural enemies including parasitic wasps (Diaeretiella rapae), ladybirds and lacewings. Avoid late-season nitrogen application which promotes soft tissue attractive to aphids.",
+      "seeAlso": "https://gd.eppo.int/taxon/BRVCBR"
+    },
+    {
+      "@id": "urn:openagri:crop:brassica-oleracea",
+      "@type": [
+        "AgriCrop"
+      ],
+      "identifier": "brassica-oleracea",
+      "name": "Cabbage",
+      "alternateName": "Brassica crops",
+      "description": "Brassica oleracea L. encompasses a wide range of important vegetable crops including cabbage, broccoli, Brussels sprouts, cauliflower, kale and kohlrabi. It is the primary host of the cabbage aphid (Brevicoryne brassicae) and is susceptible throughout the growing season, with highest economic losses occurring when infestations establish during head formation.",
+      "scientificName": "Brassica oleracea",
+      "growthStages": [
+        {
+          "@type": "AgriGrowthStage",
+          "identifier": "BBCH-10",
+          "name": "Seedling emergence",
+          "description": "Cotyledons fully unfolded. Transplants at this stage are highly susceptible to early-colonising aphid foundresses."
+        },
+        {
+          "@type": "AgriGrowthStage",
+          "identifier": "BBCH-19",
+          "name": "9 or more true leaves",
+          "description": "Rosette stage fully developed. Dense leaf canopy creates favourable microclimate for aphid colony establishment."
+        },
+        {
+          "@type": "AgriGrowthStage",
+          "identifier": "BBCH-40",
+          "name": "Beginning of head formation",
+          "description": "Terminal bud begins to close. This is a critical economic threshold period — aphid colonies in the developing head are extremely difficult to control and cause direct quality losses."
+        },
+        {
+          "@type": "AgriGrowthStage",
+          "identifier": "BBCH-49",
+          "name": "Head formation complete",
+          "description": "Outer leaves form a full wrapper around the head. Aphid colonies trapped inside the head at harvest cause rejection and downgrade."
+        },
+        {
+          "@type": "AgriGrowthStage",
+          "identifier": "BBCH-89",
+          "name": "Harvest maturity",
+          "description": "Full commercial maturity. Inspection for aphid presence is mandatory before harvest for fresh market crops."
+        }
+      ],
+      "seeAlso": "https://gd.eppo.int/taxon/BRSOL"
+    },
+    {
+      "@id": "urn:openagri:pest-host-relationship:BRVCBR-brassica-oleracea",
+      "@type": [
+        "AgriPestHostRelationship"
+      ],
+      "identifier": "BRVCBR-brassica-oleracea",
+      "description": "Primary pathosystem: Brevicoryne brassicae (BRVCBR) — Brassica oleracea. The cabbage aphid is an obligate specialist on Brassicaceae; it cannot complete its lifecycle on non-Brassica hosts. All commercial Brassica oleracea crops (cabbage, broccoli, Brussels sprouts, cauliflower, kale) are susceptible.",
+      "hasPest": {
+        "@id": "urn:eppo:BRVCBR"
+      },
+      "hasCrop": {
+        "@id": "urn:openagri:crop:brassica-oleracea"
+      },
+      "riskPeriod": "Early spring (transplant establishment, BBCH-10) through head formation (BBCH-49); peak infestation risk at mid-season rosette stage (BBCH-19 to BBCH-40).",
+      "eppoCode": "BRVCBR",
+      "hostEppoCode": "BRSOL",
+      "favorableConditions": {
+        "temperatureRangeC": "15–20 (population build-up slows above 25 °C and below 5 °C)",
+        "humidity": "Dry conditions favour colony persistence; rain reduces colony density",
+        "notes": "Spring and early autumn are peak migration and establishment periods. Winged forms (alates) are produced under crowded colony conditions or deteriorating host quality, driving spread between fields."
+      }
+    },
+    {
+      "@id": "urn:eppo:UNCINE",
+      "@type": [
+        "AgriPest"
+      ],
+      "identifier": "UNCINE",
+      "name": "Powdery mildew of grape",
+      "alternateName": "UNCINE",
+      "description": "Uncinula necator (syn. Erysiphe necator) is a fungus that causes powdery mildew of grape. It is a common pathogen of Vitis species, including the wine grape (Vitis vinifera), causing significant yield and quality losses across wine-producing regions worldwide.",
+      "eppoConcept": "https://gd.eppo.int/taxon/UNCINE",
+      "affectsCrop": {
+        "@id": "urn:openagri:crop:vitis-vinifera"
+      },
+      "symptomDescription": "White to grey powdery coating on leaves, shoots and young fruit. Severe infections cause stunted shoot growth, leaf curling, fruit cracking and reduced berry quality. Favoured by warm days (20–27 °C) and dry conditions with high relative humidity at night.",
+      "managementNotes": "Apply sulphur-based or systemic fungicides at early signs of infection. Monitor relative humidity and temperature conditions to predict outbreak windows using pest risk index models.",
+      "seeAlso": "https://gd.eppo.int/taxon/UNCINE"
+    },
+    {
+      "@id": "urn:openagri:crop:vitis-vinifera",
+      "@type": [
+        "AgriCrop"
+      ],
+      "identifier": "vitis-vinifera",
+      "name": "Grapevine",
+      "alternateName": "Wine grape",
+      "description": "Vitis vinifera is the primary host of Uncinula necator (powdery mildew) and Plasmopara viticola (downy mildew). It is one of the most economically important fruit crops globally and the principal substrate for wine production.",
+      "scientificName": "Vitis vinifera",
+      "growthStages": [
+        {
+          "@type": "AgriGrowthStage",
+          "identifier": "BBCH-07",
+          "name": "Bud break",
+          "description": "Green shoot tips visible; first leaves expanding. Risk window for early season infections begins."
+        },
+        {
+          "@type": "AgriGrowthStage",
+          "identifier": "BBCH-61",
+          "name": "Flowering — beginning of flowering",
+          "description": "First flowers open. Critical period for both powdery mildew and downy mildew infection."
+        },
+        {
+          "@type": "AgriGrowthStage",
+          "identifier": "BBCH-71",
+          "name": "Fruit set",
+          "description": "Berries 2–4 mm in diameter. High susceptibility to powdery mildew infection."
+        },
+        {
+          "@type": "AgriGrowthStage",
+          "identifier": "BBCH-81",
+          "name": "Veraison — beginning of ripening",
+          "description": "Berries begin to soften and change colour. Powdery mildew infections at this stage can crack berries and introduce secondary rots."
+        },
+        {
+          "@type": "AgriGrowthStage",
+          "identifier": "BBCH-89",
+          "name": "Harvest",
+          "description": "Full maturity; berries reach target Brix for variety and intended wine style."
+        }
+      ],
+      "seeAlso": "https://gd.eppo.int/taxon/VITVI"
+    },
+    {
+      "@id": "urn:openagri:pest-host-relationship:UNCINE-vitis-vinifera",
+      "@type": [
+        "AgriPestHostRelationship"
+      ],
+      "identifier": "UNCINE-vitis-vinifera",
+      "description": "Obligate pathosystem: Uncinula necator (UNCINE) — Vitis vinifera. Powdery mildew is an obligate biotrophic fungal pathogen; it cannot survive without a living host. Grapevine is its primary economically significant host.",
+      "hasPest": {
+        "@id": "urn:eppo:UNCINE"
+      },
+      "hasCrop": {
+        "@id": "urn:openagri:crop:vitis-vinifera"
+      },
+      "riskPeriod": "Bud break (BBCH-07) through veraison (BBCH-81); peak susceptibility at flowering and fruit set.",
+      "eppoCode": "UNCINE",
+      "hostEppoCode": "VITVI",
+      "favorableConditions": {
+        "temperatureRangeC": "20–27",
+        "relativeHumidityPercent": "greater than 40 (spore germination does not require free water)",
+        "notes": "Unlike many fungal pathogens, powdery mildew does not require leaf wetness for infection. High relative humidity at night combined with warm dry days is the classic outbreak condition."
+      }
+    },
+    {
+      "@id": "urn:openagri:ocsm-profile:cabbage-pest-crop",
+      "@type": [
+        "OCSMProfile"
+      ],
+      "identifier": "cabbage-pest-crop",
+      "name": "Cabbage aphid pest/crop context",
+      "description": "OCSM-conformant JSON-LD records for the cabbage aphid (BRVCBR, Brevicoryne brassicae) on Brassica oleracea, the primary pest and crop pair of the BugFinderAI pest-session pipeline, and for powdery mildew of grape (UNCINE, Uncinula necator) on Vitis vinifera as a second pair. The pipeline's session orchestrator composes the session's pest-and-crop context in these terms.",
+      "version": "1.0.0",
+      "creator": "Smart Farm Robotix",
+      "conformsTo": "https://w3id.org/ocsm/main-context.jsonld",
+      "includes": [
+        {
+          "@id": "urn:eppo:BRVCBR"
+        },
+        {
+          "@id": "urn:openagri:crop:brassica-oleracea"
+        },
+        {
+          "@id": "urn:openagri:pest-host-relationship:BRVCBR-brassica-oleracea"
+        },
+        {
+          "@id": "urn:eppo:UNCINE"
+        },
+        {
+          "@id": "urn:openagri:crop:vitis-vinifera"
+        },
+        {
+          "@id": "urn:openagri:pest-host-relationship:UNCINE-vitis-vinifera"
+        }
+      ]
+    }
+  ]
+}
